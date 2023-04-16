@@ -1,17 +1,5 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  OneToOne,
-  JoinColumn,
-  Relation,
-  OneToMany,
-  ManyToOne,
-} from 'typeorm';
-import { Partner } from './Partner';
-import { Answer } from './Answer';
+import { Entity, PrimaryGeneratedColumn, Column, Relation, ManyToOne } from 'typeorm';
 import { RulesOfLove } from './RulesOfLove';
-import { Reminder } from './Reminder';
 
 @Entity()
 export class User {
@@ -36,21 +24,6 @@ export class User {
   @Column({ default: true })
   isSingle: boolean;
 
-  @OneToOne(() => Partner, (partner) => partner.userOne)
-  @JoinColumn()
-  partnerOne: Relation<Partner>;
-
-  @OneToOne(() => Partner, (partner) => partner.userTwo)
-  @JoinColumn()
-  partnerTwo: Relation<Partner>;
-
-  @OneToMany(() => Answer, (answer) => answer.user)
-  answers: Relation<Answer>[];
-
-  // OurPet
-  @Column({ default: 0 })
-  bestTime: number;
-
   // Rules Of Love
   @ManyToOne(() => RulesOfLove, (rol) => rol.players, { cascade: ['insert', 'update'] })
   rolInfo: Relation<RulesOfLove>;
@@ -71,7 +44,4 @@ export class User {
 
   @Column({ default: 0 })
   highestRoundReachedCopycat: number;
-
-  @OneToMany(() => Reminder, (reminder) => reminder.user)
-  reminders: Reminder[];
 }
