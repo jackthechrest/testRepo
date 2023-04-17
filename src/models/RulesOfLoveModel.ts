@@ -1,6 +1,5 @@
 import { AppDataSource } from '../dataSource';
 import { RulesOfLove } from '../entities/RulesOfLove';
-import { User } from '../entities/User';
 import { addROL } from './UserModel';
 
 // rules of love repository
@@ -8,33 +7,29 @@ const rolRepository = AppDataSource.getRepository(RulesOfLove);
 
 async function startROL(
   gameId: string,
-  player: User,
+  userId: string,
   play: RulesOfLoveOptions
 ): Promise<RulesOfLove> {
   let newROL = new RulesOfLove();
   newROL.gameId = gameId;
-  await addROL(player.userId, play, newROL);
+  await addROL(userId, play, newROL);
 
   newROL = await rolRepository.save(newROL);
-
-  console.log(newROL);
 
   return newROL;
 }
 
 async function joinROL(
   game: RulesOfLove,
-  player: User,
+  userId: string,
   play: RulesOfLoveOptions
 ): Promise<RulesOfLove> {
-  const updatedGame = game;
-  await addROL(player.userId, play, updatedGame);
+  const updatedROL = game;
+  await addROL(userId, play, updatedROL);
 
-  await rolRepository.save(updatedGame);
+  await rolRepository.save(updatedROL);
 
-  console.log(updatedGame);
-
-  return updatedGame;
+  return updatedROL;
 }
 
 async function getROLById(gameId: string): Promise<RulesOfLove | null> {

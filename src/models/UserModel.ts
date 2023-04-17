@@ -35,14 +35,12 @@ async function getUserById(userId: string): Promise<User | null> {
 async function addROL(
   userId: string,
   newPlay: RulesOfLoveOptions,
-  newROL: RulesOfLove
+  rol: RulesOfLove
 ): Promise<void> {
-  await userRepository
-    .createQueryBuilder()
-    .update(User)
-    .set({ currentPlay: newPlay, rolInfo: newROL })
-    .where({ userId })
-    .execute();
+  let user = await userRepository.findOne({ where: { userId } });
+  user.currentPlay = newPlay;
+  user.rolInfo = rol;
+  user = await userRepository.save(user);
 }
 
 export { addUser, getUserByEmail, getUserById, allUserData, addROL, userRepository };

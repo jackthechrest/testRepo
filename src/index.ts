@@ -1,14 +1,10 @@
 import './config'; // Load environment variables
-import 'express-async-errors'; // Enable default error handling for async errors
+import 'express-async-errors'; // Enable default error handling for async errorss
 
-import express, { Express, Request, Response, NextFunction } from 'express';
+import express, { Express } from 'express';
 import session from 'express-session';
-import { Server } from 'socket.io';
 import connectSqlite3 from 'connect-sqlite3';
-import {
-  registerUser,
-  logIn,
-} from './controllers/UserController.js';
+import { registerUser, logIn } from './controllers/UserController.js';
 import { intermediateRulesOfLove, playRulesOfLove } from './controllers/RulesOfLoveController.js';
 import { playCopycat } from './controllers/CopycatController';
 
@@ -54,6 +50,6 @@ app.post('/rulesoflove/:gameId', playRulesOfLove);
 // copycat
 app.post('/copycat/play', playCopycat);
 
-const server = app.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Listening at http://localhost:${PORT}`);
 });
