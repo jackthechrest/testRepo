@@ -9,6 +9,7 @@ import { intermediateRulesOfLove, playRulesOfLove } from './controllers/RulesOfL
 import { playCopycat } from './controllers/CopycatController';
 
 const app: Express = express();
+
 app.set('view engine', 'ejs');
 app.use(express.static('public', { extensions: ['html'] }));
 
@@ -45,7 +46,7 @@ app.post('/login', logIn);
 
 // rules of love
 app.post('/rulesoflove/play', intermediateRulesOfLove);
-app.post('/rulesoflove/:gameId', playRulesOfLove);
+app.get('/rulesoflove/:gameId', playRulesOfLove);
 
 // copycat
 app.post('/copycat/play', playCopycat);
